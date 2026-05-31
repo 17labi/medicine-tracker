@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#2563eb">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sushastho Pro - Senior Care Ecosystem</title>
+    <!-- Tailwind CSS Engine -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;600;800&display=swap');
+        
+        body {
+            font-family: 'Hind Siliguri', 'Inter', sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .nav-btn.active {
+            background-color: #2563eb;
+            color: white;
+            box-shadow: 0 10px 20px -3px rgba(37, 99, 235, 0.4);
+            transform: translateY(-6px);
+        }
+
+        .time-focus-btn.active {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+            box-shadow: 0 4px 12px -1px rgba(37, 99, 235, 0.15);
+            transform: scale(1.05);
+        }
+
+        .audio-wave {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .audio-bar {
+            width: 3px;
+            height: 15px;
+            background: #f43f5e;
+            animation: wave 1s infinite ease-in-out;
+        }
+        @keyframes wave {
+            0%, 100% { height: 6px; }
+            50% { height: 22px; }
+        }
+
+        .home-time-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+
+        /* Adjusted Serial number styling */
+        .serial-num {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            background: #1e293b;
+            color: white;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+
+        /* Beautiful scrollbar optimization */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="pb-32 min-h-screen flex flex-col justify-between">
+
+    <!-- Header -->
+    <header class="bg-blue-900 text-white p-6 shadow-2xl sticky top-0 z-50 rounded-b-[35px]">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div id="header-profile-img" class="w-14 h-14 rounded-full bg-blue-700 border-2 border-white flex items-center justify-center overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105">
+                    <span class="text-xl">👤</span>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight" id="display-user-name">সুস্বাস্থ্য প্রো</h1>
+                    <div class="flex items-center gap-2">
+                        <p class="text-[10px] font-bold opacity-75 uppercase tracking-wider" data-key="subTitle">Senior Health Care</p>
+                        <!-- Cloud Sync Status Badge -->
+                        <span id="cloud-sync-status" class="text-[9px] bg-amber-500/80 text-white px-2 py-0.5 rounded-full font-bold animate-pulse">
+                            Initializing...
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="text-right">
+                <div id="clock" class="text-2xl font-mono font-black tracking-wider text-amber-300">০০:০০</div>
+                <p id="date" class="text-[10px] font-semibold opacity-85"></p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-lg bg-white/95 backdrop-blur-2xl border border-slate-100 p-2 z-[100] flex justify-around items-center rounded-[35px] shadow-[0_20px_50px_rgba(0,0,0,0.12)]">
+        <button onclick="showTab('home')" id="btn-home" class="nav-btn active p-4 rounded-full text-gray-400 transition-all duration-300 hover:text-blue-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        </button>
+        <button onclick="showTab('pills')" id="btn-pills" class="nav-btn p-4 rounded-full text-gray-400 transition-all duration-300 hover:text-blue-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        </button>
+        <button onclick="showTab('history')" id="btn-history" class="nav-btn p-4 rounded-full text-gray-400 transition-all duration-300 hover:text-blue-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </button>
+        <button onclick="showTab('health')" id="btn-health" class="nav-btn p-4 rounded-full text-gray-400 transition-all duration-300 hover:text-blue-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+        </button>
+        <button onclick="showTab('profile')" id="btn-profile" class="nav-btn p-4 rounded-full text-gray-400 transition-all duration-300 hover:text-blue-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        </button>
+    </nav>
+
+    <main class="max-w-4xl mx-auto p-4 space-y-6 flex-1 w-full">
+
+        <!-- TAB: HOME -->
+        <div id="tab-home" class="tab-content active space-y-6">
+            
+            <div class="home-time-gradient p-8 rounded-[35px] text-white shadow-xl flex flex-col items-center justify-center text-center relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/5 rounded-full blur-2xl"></div>
+                <p id="home-date" class="text-sm font-semibold opacity-90 mb-1"></p>
+                <h2 id="home-clock" class="text-5xl font-black mb-3 text-amber-300">০০:০০</h2>
+                <div class="h-1.5 w-14 bg-white/30 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="toggleSOS()" class="bg-rose-600 hover:bg-rose-700 text-white p-6 rounded-[30px] shadow-lg active:scale-95 transition-all flex flex-col items-center justify-center">
+                    <span class="text-4xl mb-2">🆘</span>
+                    <span class="font-bold" data-key="emergencyHelp">জরুরী সাহায্য</span>
+                </button>
+                <button onclick="openPrescription()" class="bg-sky-500 hover:bg-sky-600 text-white p-6 rounded-[30px] shadow-lg active:scale-95 transition-all flex flex-col items-center justify-center">
+                    <span class="text-4xl mb-2">📄</span>
+                    <span class="font-bold" data-key="prescription">প্রেসক্রিপশন</span>
+                </button>
+            </div>
+
+            <!-- All Taken Check -->
+            <button onclick="checkAllMedsStatus()" class="w-full bg-white p-6 rounded-[30px] border border-blue-100 shadow-md flex items-center justify-center gap-4 active:scale-95 transition-all hover:bg-slate-50">
+                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-2xl">✅</div>
+                <div class="text-left">
+                    <span class="block text-xl font-black text-slate-800" data-key="verifyHeader">আজকে সব খেয়েছি?</span>
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide" data-key="verifySub">Daily Medicine Verification</span>
+                </div>
+            </button>
+
+            <!-- Voice Control Center -->
+            <div class="bg-white p-4 rounded-[30px] shadow-md border border-slate-100 grid grid-cols-2 gap-3">
+                <button onclick="smartVoiceAssistant('daily')" class="bg-blue-50 hover:bg-blue-100 p-5 rounded-[22px] flex items-center gap-3 active:scale-95 transition-all">
+                    <span class="text-2xl">🤖</span>
+                    <div class="text-left">
+                        <span class="block font-bold text-blue-900 leading-none" data-key="routineBtn">রুটিন শুনুন</span>
+                        <span class="text-[9px] uppercase font-black text-blue-400" data-key="routineSub">Daily Analysis</span>
+                    </div>
+                </button>
+                <button onclick="smartVoiceAssistant('slot')" class="bg-indigo-50 hover:bg-indigo-100 p-5 rounded-[22px] flex items-center gap-3 active:scale-95 transition-all">
+                    <span class="text-2xl">📢</span>
+                    <div class="text-left">
+                        <span class="block font-bold text-indigo-900 leading-none" data-key="guideBtn">এখনকার গাইড</span>
+                        <span class="text-[9px] uppercase font-black text-indigo-400" data-key="guideSub">Current Slot</span>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Time Slots -->
+            <div class="bg-white p-2 rounded-[30px] shadow-sm flex justify-between gap-2 overflow-x-auto border border-slate-100">
+                <button id="focus-morning" onclick="setFocus('morning')" class="time-focus-btn flex-1 min-w-[85px] py-5 rounded-[25px] flex flex-col items-center border-2 border-transparent transition-all">
+                    <span class="text-2xl mb-1">🌅</span>
+                    <span class="text-[12px] font-bold" data-key="shokal">সকাল</span>
+                    <span class="text-[9px] opacity-60 font-semibold" data-key="shokalTime">০৬-১১</span>
+                </button>
+                <button id="focus-noon" onclick="setFocus('noon')" class="time-focus-btn flex-1 min-w-[85px] py-5 rounded-[25px] flex flex-col items-center border-2 border-transparent transition-all">
+                    <span class="text-2xl mb-1">☀️</span>
+                    <span class="text-[12px] font-bold" data-key="dupur">দুপুর</span>
+                    <span class="text-[9px] opacity-60 font-semibold" data-key="dupurTime">১১-১৬</span>
+                </button>
+                <button id="focus-evening" onclick="setFocus('evening')" class="time-focus-btn flex-1 min-w-[85px] py-5 rounded-[25px] flex flex-col items-center border-2 border-transparent transition-all">
+                    <span class="text-2xl mb-1">🌇</span>
+                    <span class="text-[12px] font-bold" data-key="bikal">বিকেল</span>
+                    <span class="text-[9px] opacity-60 font-semibold" data-key="bikalTime">১৬-২০</span>
+                </button>
+                <button id="focus-night" onclick="setFocus('night')" class="time-focus-btn flex-1 min-w-[85px] py-5 rounded-[25px] flex flex-col items-center border-2 border-transparent transition-all">
+                    <span class="text-2xl mb-1">🌙</span>
+                    <span class="text-[12px] font-bold" data-key="raat">রাত</span>
+                    <span class="text-[9px] opacity-60 font-semibold" data-key="raatTime">২০-০৬</span>
+                </button>
+            </div>
+
+            <div id="focused-schedule" class="space-y-4"></div>
+        </div>
+
+        <!-- TAB: MEDICINE INVENTORY -->
+        <div id="tab-pills" class="tab-content hidden space-y-6">
+            <div class="flex justify-between items-center px-2">
+                <div>
+                    <h2 class="text-2xl font-black text-blue-900 leading-tight" data-key="medBox">ঔষধের বাক্স</h2>
+                    <p class="text-xs font-bold text-gray-400" data-key="medBoxSub">আপনার প্রয়োজনীয় সব ঔষধ এখানে যোগ করুন</p>
+                </div>
+                <button onclick="openMedModal()" class="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-2xl font-black shadow-lg flex items-center gap-2 transition-transform active:scale-95">
+                    <span class="text-2xl font-bold leading-none">+</span>
+                </button>
+            </div>
+            <div id="inventory-list" class="grid grid-cols-1 gap-4 pb-10"></div>
+        </div>
+
+        <!-- TAB: SMART HISTORY -->
+        <div id="tab-history" class="tab-content hidden space-y-6">
+            <div class="px-2">
+                <h2 class="text-2xl font-black text-slate-800" data-key="smartHistory">স্মার্ট হেলথ হিস্ট্রি</h2>
+                <p class="text-xs font-bold text-gray-400" data-key="historySubtitle">ঔষধ গ্রহণের বিস্তারিত রেকর্ড</p>
+            </div>
+            <div id="history-accordion" class="space-y-4"></div>
+        </div>
+
+        <!-- TAB: HEALTH DIARY -->
+        <div id="tab-health" class="tab-content hidden space-y-6">
+            <div class="bg-rose-600 p-8 rounded-[35px] text-white shadow-xl relative overflow-hidden">
+                <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-white/5 rounded-full blur-2xl"></div>
+                <div class="relative z-10">
+                    <h2 class="text-2xl font-black mb-4" data-key="healthDiary">স্বাস্থ্য ডায়েরি</h2>
+                    <textarea id="diary-note" data-placeholder-key="diaryPlaceholder" placeholder="আজ কেমন লাগছে আপনার? কোনো ব্যথা বা অস্বস্তি আছে?..." class="w-full p-6 rounded-[25px] text-gray-800 outline-none h-40 shadow-inner border border-rose-400/35 bg-white/95"></textarea>
+                    <div class="flex gap-3 mt-5">
+                        <button id="record-btn" onclick="toggleAudioRecording()" class="flex-1 bg-white/20 backdrop-blur-md p-5 rounded-[22px] font-bold flex items-center justify-center gap-2 border border-white/30 active:scale-95 transition-all">
+                            <span id="record-icon">🎤</span> <span id="record-status" data-key="voiceDiary">ভয়েস ডায়েরি</span>
+                        </button>
+                        <button onclick="saveDiaryEntry()" class="flex-1 bg-white text-rose-600 hover:bg-rose-50 p-5 rounded-[22px] font-black shadow-lg active:scale-95 transition-all" data-key="saveBtn">সেভ করুন</button>
+                    </div>
+                </div>
+            </div>
+            <div id="diary-list" class="space-y-4"></div>
+        </div>
+
+        <!-- TAB: PROFILE -->
+        <div id="tab-profile" class="tab-content hidden space-y-6">
+            <div class="bg-white p-8 rounded-[35px] shadow-lg border border-slate-100 border-b-[10px] border-indigo-600">
+                
+                <!-- Modern Lang Switcher -->
+                <div class="p-5 bg-indigo-50/50 rounded-[30px] border border-indigo-100 flex justify-between items-center mb-6">
+                    <div>
+                        <span class="block text-sm font-black text-indigo-950" data-key="languageLabel">ভাষা / Language</span>
+                        <span class="text-[10px] text-indigo-400 font-bold">Select App Language</span>
+                    </div>
+                    <div class="flex bg-white p-1 rounded-2xl shadow-inner border border-indigo-200">
+                        <button onclick="setLanguage('bn')" id="lang-bn-btn" class="px-4 py-2 font-black text-xs rounded-xl transition-all">বাংলা</button>
+                        <button onclick="setLanguage('en')" id="lang-en-btn" class="px-4 py-2 font-black text-xs rounded-xl transition-all">English</button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center mb-8">
+                    <div class="relative group">
+                        <div id="profile-img-container" class="w-32 h-32 rounded-full bg-slate-100 border-4 border-white shadow-xl overflow-hidden flex items-center justify-center">
+                            <span class="text-4xl text-gray-300">👤</span>
+                        </div>
+                        <input type="file" id="profile-upload" class="hidden" onchange="uploadProfilePhoto(this)" accept="image/*">
+                        <button onclick="document.getElementById('profile-upload').click()" class="absolute bottom-1 right-1 bg-indigo-600 text-white p-3 rounded-full shadow-lg hover:bg-indigo-700 active:scale-90 transition-all">📸</button>
+                    </div>
+                    <h3 class="mt-4 text-2xl font-black text-gray-800" id="profile-name-display">ব্যবহারকারী</h3>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest" data-key="profileSubtitle">User Profile</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="p-4 bg-gray-50 rounded-[20px] border border-gray-100">
+                        <label class="text-[10px] font-black text-gray-400 uppercase ml-2" data-key="fullName">পুরো নাম</label>
+                        <input type="text" id="p-name" class="w-full bg-transparent font-bold text-gray-800 outline-none px-2 py-1 mt-1 border-b border-transparent focus:border-blue-300">
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-[20px] border border-gray-100">
+                        <label class="text-[10px] font-black text-gray-400 uppercase ml-2" data-key="emergencyContact">জরুরী কন্টাক্ট</label>
+                        <input type="tel" id="p-sos" class="w-full bg-transparent font-bold text-red-600 outline-none px-2 py-1 mt-1 border-b border-transparent focus:border-blue-300">
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-[20px] border border-gray-100">
+                        <label class="text-[10px] font-black text-gray-400 uppercase ml-2" data-key="fatherName">পিতার নাম</label>
+                        <input type="text" id="p-father" class="w-full bg-transparent font-bold text-gray-800 outline-none px-2 py-1 mt-1 border-b border-transparent focus:border-blue-300">
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-[20px] border border-gray-100">
+                        <label class="text-[10px] font-black text-gray-400 uppercase ml-2" data-key="motherName">মাতার নাম</label>
+                        <input type="text" id="p-mother" class="w-full bg-transparent font-bold text-gray-800 outline-none px-2 py-1 mt-1 border-b border-transparent focus:border-blue-300">
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-[20px] border border-gray-100 md:col-span-2">
+                        <label class="text-[10px] font-black text-gray-400 uppercase ml-2" data-key="address">বর্তমান ঠিকানা</label>
+                        <textarea id="p-address" class="w-full bg-transparent font-bold text-gray-800 outline-none h-20 px-2 py-1 mt-1 resize-none border-b border-transparent focus:border-blue-300"></textarea>
+                    </div>
+                </div>
+                <button onclick="saveFullProfile()" class="w-full mt-8 bg-indigo-600 hover:bg-indigo-700 text-white p-5 rounded-[22px] font-black shadow-xl active:scale-95 transition-all text-lg" data-key="saveAllProfileBtn">সব তথ্য সেভ করুন</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modal: Prescription View -->
+    <div id="prescription-modal" class="fixed inset-0 bg-black/80 hidden z-[200] flex items-center justify-center p-4 backdrop-blur-md">
+        <div class="bg-white w-full max-w-lg rounded-[35px] p-8 max-h-[85vh] overflow-y-auto shadow-2xl relative">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-3xl font-black text-blue-900" data-key="prescription">প্রেসক্রিপশন</h2>
+                    <p class="text-xs font-bold text-gray-400">Medicine listing & schedule</p>
+                </div>
+                <button onclick="closePrescription()" class="text-4xl text-gray-300 hover:text-red-500 transition-colors">&times;</button>
+            </div>
+            <div id="prescription-list" class="space-y-4"></div>
+            <button onclick="closePrescription()" class="w-full mt-8 bg-blue-600 hover:bg-blue-700 text-white p-5 rounded-[22px] font-black shadow-xl active:scale-95 transition-all text-lg" data-key="closeBtn">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <!-- Modal: Add/Edit Medicine -->
+    <div id="med-modal" class="fixed inset-0 bg-black/70 hidden z-[200] flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-lg rounded-[35px] p-8 max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-black text-blue-900" data-key="addMedBtn">ঔষধের তথ্য দিন</h2>
+                <button onclick="closeMedModal()" class="text-4xl text-gray-300 hover:text-red-500 transition-colors">&times;</button>
+            </div>
+            <form id="med-form" class="space-y-5">
+                <input type="hidden" id="m-id">
+                
+                <div class="flex flex-col items-center mb-4">
+                    <div class="w-24 h-24 rounded-[22px] bg-blue-50 border-2 border-dashed border-blue-200 overflow-hidden flex items-center justify-center relative cursor-pointer" onclick="document.getElementById('med-photo-upload').click()">
+                        <div id="med-preview" class="w-full h-full flex flex-col items-center justify-center">
+                            <span class="text-3xl">📷</span>
+                            <span class="text-[8px] font-black text-blue-400 mt-1">ছবি দিন</span>
+                        </div>
+                        <input type="file" id="med-photo-upload" class="hidden" accept="image/*" onchange="handleMedPhoto(this)">
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <div class="flex-1">
+                        <label class="text-[10px] font-bold uppercase text-gray-400 ml-3" data-key="medName">ঔষধের নাম</label>
+                        <input type="text" id="m-name" required class="w-full p-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent outline-none">
+                    </div>
+                    <div class="w-24">
+                        <label class="text-[10px] font-bold uppercase text-gray-400 ml-3" data-key="icon">আইকন</label>
+                        <select id="m-icon" class="w-full p-4 bg-gray-50 rounded-2xl font-bold outline-none">
+                            <option value="💊">💊</option><option value="🔴">🔴</option><option value="🔵">🔵</option><option value="🟢">🟢</option><option value="⚪">⚪</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-5 bg-blue-50 rounded-[25px] border border-blue-100">
+                        <label class="text-[10px] font-black uppercase text-blue-500 block mb-3" data-key="whenEat">কখন খাবেন?</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-3 text-xs font-bold cursor-pointer"><input type="checkbox" name="m-time" value="morning" class="w-4 h-4 rounded"> <span data-key="shokal">সকাল</span></label>
+                            <label class="flex items-center gap-3 text-xs font-bold cursor-pointer"><input type="checkbox" name="m-time" value="noon" class="w-4 h-4 rounded"> <span data-key="dupur">দুপুর</span></label>
+                            <label class="flex items-center gap-3 text-xs font-bold cursor-pointer"><input type="checkbox" name="m-time" value="evening" class="w-4 h-4 rounded"> <span data-key="bikal">বিকেল</span></label>
+                            <label class="flex items-center gap-3 text-xs font-bold cursor-pointer"><input type="checkbox" name="m-time" value="night" class="w-4 h-4 rounded"> <span data-key="raat">রাত</span></label>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="text-[10px] font-bold uppercase text-gray-400 ml-3" data-key="stockCount">স্টক (সংখ্যা)</label>
+                            <input type="number" id="m-stock" class="w-full p-4 bg-gray-50 rounded-2xl font-bold outline-none" value="10">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold uppercase text-gray-400 ml-3" data-key="courseStart">কোর্স শুরু</label>
+                            <input type="date" id="m-start" class="w-full p-4 bg-gray-50 rounded-2xl font-bold outline-none">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold uppercase text-gray-400 ml-3" data-key="courseEnd">কোর্স শেষ</label>
+                            <input type="date" id="m-end" class="w-full p-4 bg-gray-50 rounded-2xl font-bold outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-[10px] font-bold uppercase text-gray-400 ml-3" data-key="ruleEat">খাওয়ার নিয়ম</label>
+                    <textarea id="m-inst" data-placeholder-key="ruleEatPlaceholder" placeholder="নিয়ম লিখুন (যেমন: খাবারের ২০ মিনিট আগে)..." class="w-full p-4 bg-gray-50 rounded-2xl font-bold outline-none h-24 resize-none"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white p-5 rounded-[22px] font-black shadow-xl active:scale-95 transition-all text-lg" data-key="saveBtn">সেভ করুন</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SOS Overlay -->
+    <div id="sos-modal" class="fixed inset-0 bg-red-700/95 hidden z-[300] flex flex-col items-center justify-center p-10 text-white backdrop-blur-md">
+        <h2 class="text-4xl font-black mb-8 text-center leading-tight">সাহায্য দরকার?</h2>
+        <div class="w-44 h-44 bg-white rounded-full flex items-center justify-center text-7xl shadow-2xl mb-12 animate-pulse ring-8 ring-white/20">📞</div>
+        <div class="w-full max-w-sm space-y-4">
+            <a href="tel:999" class="block w-full bg-white text-red-700 py-6 rounded-3xl text-4xl font-black text-center shadow-xl transition-transform hover:scale-105">৯৯৯</a>
+            <a id="sos-call-btn" href="tel:" class="block w-full bg-red-950/60 border-2 border-white/40 py-5 rounded-3xl text-xl font-bold text-center backdrop-blur-lg hover:bg-red-950/80">ইমার্জেন্সি কন্টাক্ট</a>
+            <button onclick="toggleSOS()" class="block w-full text-white/70 font-bold py-4 underline text-center" data-key="closeBtn">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <!-- Custom Dialog & Toast Overlay Container -->
+    <div id="custom-toast-container" class="fixed top-5 left-1/2 -translate-x-1/2 z-[400] w-[90%] max-w-sm pointer-events-none space-y-2"></div>
+
+    <!-- Custom Confirmation Modal Box -->
+    <div id="custom-confirm-modal" class="fixed inset-0 bg-black/60 hidden z-[350] flex items-center justify-center p-4 backdrop-blur-xs">
+        <div class="bg-white rounded-[30px] p-6 max-w-md w-full shadow-2xl transform scale-95 transition-transform duration-300">
+            <h3 class="text-xl font-black text-slate-800 mb-2" id="confirm-title" data-key="confirmTitle">অনুমতি দিন</h3>
+            <p class="text-sm font-semibold text-gray-500 mb-6" id="confirm-message" data-key="confirmMsg">আপনি কি নিশ্চিত?</p>
+            <div class="flex gap-4">
+                <button id="confirm-cancel" class="flex-1 bg-gray-100 hover:bg-gray-200 text-slate-700 py-3 rounded-xl font-bold transition-all" data-key="noCancel">বাতিল</button>
+                <button id="confirm-ok" class="flex-1 bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-bold transition-all shadow-md" data-key="yesConfirm">হ্যাঁ, নিশ্চিত</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK Modular Modules -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+
+        // Webapp Config provided by User
+        const firebaseConfig = {
+            apiKey: "AIzaSyDqjbA7I7AY2Q2Zosc780RKvy-tHn2tdEI",
+            authDomain: "medicine-beddd.firebaseapp.com",
+            databaseURL: "https://medicine-beddd-default-rtdb.firebaseio.com",
+            projectId: "medicine-beddd",
+            storageBucket: "medicine-beddd.firebasestorage.app",
+            messagingSenderId: "255839453007",
+            appId: "1:255839453007:web:b1b190f23f42a123428f3a",
+            measurementId: "G-Y4C4BRQKSR"
+        };
+
+        // Initialize Firebase services
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const rtdb = getDatabase(app);
+
+        window.firebaseDb = rtdb;
+        window.firebaseAuth = auth;
+
+        // Sync local storage state to Realtime Database after authentication
+        onAuthStateChanged(auth, async (user) => {
+            const statusEl = document.getElementById('cloud-sync-status');
+            if (user) {
+                console.log("Logged into Firebase with UID:", user.uid);
+                window.firebaseUserId = user.uid;
+                
+                // Fetch existing cloud backup
+                const userRef = ref(rtdb, 'users/' + user.uid);
+                try {
+                    const snapshot = await get(userRef);
+                    if (snapshot.exists()) {
+                        const cloudData = snapshot.val();
+                        // Recover data from cloud
+                        if (cloudData.meds) window.medications = cloudData.meds;
+                        if (cloudData.history) window.historyData = cloudData.history;
+                        if (cloudData.diary) window.diaryEntries = cloudData.diary;
+                        if (cloudData.profile) window.profile = cloudData.profile;
+                        if (cloudData.lang) window.lang = cloudData.lang;
+                        
+                        localStorage.setItem('sp_meds', JSON.stringify(window.medications));
+                        localStorage.setItem('sp_history_v2', JSON.stringify(window.historyData));
+                        localStorage.setItem('sp_diary', JSON.stringify(window.diaryEntries));
+                        localStorage.setItem('sp_profile', JSON.stringify(window.profile));
+                        localStorage.setItem('sp_lang', window.lang);
+                        
+                        updateCloudIndicator('synced');
+                    } else {
+                        // Cloud is empty, push local state to cloud as backup initiation
+                        await set(userRef, {
+                            meds: window.medications,
+                            history: window.historyData,
+                            diary: window.diaryEntries,
+                            profile: window.profile,
+                            lang: window.lang
+                        });
+                        updateCloudIndicator('synced');
+                    }
+                } catch (err) {
+                    console.error("RTD recovery failed:", err);
+                    updateCloudIndicator('offline');
+                }
+            } else {
+                // Perform anonymous sign in
+                await signInAnonymously(auth);
+            }
+            renderAll();
+            translatePage();
+        });
+
+        // Trigger updates directly into the Firebase Realtime Database
+        window.syncToCloud = async function() {
+            if (!window.firebaseUserId) return;
+            updateCloudIndicator('syncing');
+            const userRef = ref(rtdb, 'users/' + window.firebaseUserId);
+            try {
+                await set(userRef, {
+                    meds: window.medications,
+                    history: window.historyData,
+                    diary: window.diaryEntries,
+                    profile: window.profile,
+                    lang: window.lang
+                });
+                updateCloudIndicator('synced');
+            } catch (err) {
+                console.error("Failed to sync state online:", err);
+                updateCloudIndicator('offline');
+            }
+        }
+    </script>
+
+    <script>
+        // Dictionary mapping for Bilingual support
+        const translations = {
+            bn: {
+                subTitle: "সিনিয়র কেয়ার ইকোসিস্টেম",
+                emergencyHelp: "জরুরী সাহায্য",
+                prescription: "প্রেসক্রিপশন",
+                verifyHeader: "আজকে সব খেয়েছি?",
+                verifySub: "Daily Medicine Verification",
+                routineBtn: "রুটিন শুনুন",
+                routineSub: "Daily Analysis",
+                guideBtn: "এখনকার গাইড",
+                guideSub: "Current Slot",
+                shokal: "সকাল",
+                dupur: "দুপুর",
+                bikal: "বিকেল",
+                raat: "রাত",
+                shokalTime: "০৬-১১",
+                dupurTime: "১১-১৬",
+                bikalTime: "১৬-২০",
+                raatTime: "২০-০৬",
+                medBox: "ঔষধের বাক্স",
+                medBoxSub: "আপনার প্রয়োজনীয় সব ঔষধ এখানে যোগ করুন",
+                smartHistory: "স্মার্ট হেলথ হিস্ট্রি",
+                historySubtitle: "ঔষধ গ্রহণের বিস্তারিত রেকর্ড",
+                healthDiary: "স্বাস্থ্য ডায়েরি",
+                diaryPlaceholder: "আজ কেমন লাগছে আপনার? কোনো ব্যথা বা অস্বস্তি আছে?...",
+                voiceDiary: "ভয়েস ডায়েরি",
+                saveBtn: "সেভ করুন",
+                profileSubtitle: "সিনিয়র প্রোফাইল তথ্য",
+                fullName: "পুরো নাম",
+                emergencyContact: "জরুরী কন্টাক্ট",
+                fatherName: "পিতার নাম",
+                motherName: "মাতার নাম",
+                address: "বর্তমান ঠিকানা",
+                saveAllProfileBtn: "সব তথ্য সেভ করুন",
+                closeBtn: "বন্ধ করুন",
+                addMedBtn: "ঔষধের তথ্য দিন",
+                medName: "ঔষধের নাম",
+                icon: "আইকন",
+                whenEat: "কখন খাবেন?",
+                stockCount: "স্টক (সংখ্যা)",
+                courseStart: "কোর্স শুরু",
+                courseEnd: "কোর্স শেষ",
+                ruleEat: "খাওয়ার নিয়ম",
+                ruleEatPlaceholder: "নিয়ম লিখুন (যেমন: খাবারের ২০ মিনিট আগে)...",
+                confirmTitle: "অনুমতি দিন",
+                confirmMsg: "আপনি কি নিশ্চিত?",
+                yesConfirm: "হ্যাঁ, নিশ্চিত",
+                noCancel: "বাতিল",
+                languageLabel: "ভাষা / Language",
+                takenLabel: "খাওয়া হয়েছে ✓",
+                takeLabel: "আমি খেয়েছি",
+                noMedThisSlot: "এই বেলা কোনো ঔষধ নেই",
+                noHistoryYet: "এখনো কোনো ইতিহাস নেই",
+                noDiaryYet: "ডায়েরি খালি আছে",
+                syncing: "সিঙ্ক হচ্ছে...",
+                synced: "ক্লাউড সেভড",
+                offline: "অফলাইন মোড",
+                pending: "বাকি আছে",
+                notScheduled: "প্রয়োজন নেই",
+                courseDurationLabel: "কোর্স মেয়াদ",
+                daysRemainingLabel: "দিন বাকি",
+                notStartedYetLabel: "দিন পর শুরু",
+                courseFinishedLabel: "মেয়াদ শেষ",
+                noLimitLabel: "মেয়াদহীন"
+            },
+            en: {
+                subTitle: "Senior Care Ecosystem",
+                emergencyHelp: "Emergency Help",
+                prescription: "Prescription",
+                verifyHeader: "Have I taken all today?",
+                verifySub: "Daily Medicine Verification",
+                routineBtn: "Listen Routine",
+                routineSub: "Daily Analysis",
+                guideBtn: "Current Guide",
+                guideSub: "Current Slot",
+                shokal: "Morning",
+                dupur: "Noon",
+                bikal: "Evening",
+                raat: "Night",
+                shokalTime: "06-11",
+                dupurTime: "11-16",
+                bikalTime: "16-20",
+                raatTime: "20-06",
+                medBox: "Medicine Chest",
+                medBoxSub: "Add all your essential medicines here",
+                smartHistory: "Smart Health History",
+                historySubtitle: "Detailed medicine intake log",
+                healthDiary: "Health Diary",
+                diaryPlaceholder: "How do you feel today? Any pain or discomfort?...",
+                voiceDiary: "Voice Diary",
+                saveBtn: "Save Note",
+                profileSubtitle: "Senior Profile Details",
+                fullName: "Full Name",
+                emergencyContact: "Emergency Contact",
+                fatherName: "Father's Name",
+                motherName: "Mother's Name",
+                address: "Current Address",
+                saveAllProfileBtn: "Save All Profile Info",
+                closeBtn: "Close",
+                addMedBtn: "Add Medicine Details",
+                medName: "Medicine Name",
+                icon: "Icon",
+                whenEat: "When to eat?",
+                stockCount: "Stock (Qty)",
+                courseStart: "Course Start",
+                courseEnd: "Course End",
+                ruleEat: "Directions",
+                ruleEatPlaceholder: "Directions (e.g., 20 mins before meal)...",
+                confirmTitle: "Confirmation",
+                confirmMsg: "Are you sure?",
+                yesConfirm: "Yes, Confirm",
+                noCancel: "Cancel",
+                languageLabel: "Language / ভাষা",
+                takenLabel: "Taken ✓",
+                takeLabel: "I have taken",
+                noMedThisSlot: "No medicines in this slot",
+                noHistoryYet: "No logs saved yet",
+                noDiaryYet: "Diary log is empty",
+                syncing: "Syncing...",
+                synced: "Cloud Saved",
+                offline: "Offline Mode",
+                pending: "Pending",
+                notScheduled: "Not Scheduled",
+                courseDurationLabel: "Course Duration",
+                daysRemainingLabel: "days left",
+                notStartedYetLabel: "days to start",
+                courseFinishedLabel: "Expired",
+                noLimitLabel: "Continuous"
+            }
+        };
+
+        // Initialize defaults
+        window.lang = localStorage.getItem('sp_lang') || 'bn';
+
+        // Helper: Convert English numbers into Bangla numbers if required
+        function formatBilingualNumber(num) {
+            if (!num) return '';
+            if (window.lang !== 'bn') return num.toString();
+            const banglaDigits = {'0':'০', '1':'১', '2':'২', '3':'৩', '4':'৪', '5':'৫', '6':'৬', '7':'৭', '8':'৮', '9':'৯'};
+            return num.toString().split('').map(digit => banglaDigits[digit] || digit).join('');
+        }
+
+        // Helper: Calculate Remaining Days
+        function getRemainingDays(startStr, endStr) {
+            if (!endStr) return { status: 'noLimit', days: null };
+            
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            
+            const endDate = new Date(endStr);
+            endDate.setHours(0,0,0,0);
+            
+            const startDate = startStr ? new Date(startStr) : null;
+            if (startDate) startDate.setHours(0,0,0,0);
+
+            if (startDate && today < startDate) {
+                const diffTime = startDate - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                return { status: 'notStarted', days: diffDays };
+            }
+
+            if (today > endDate) {
+                return { status: 'finished', days: 0 };
+            }
+
+            const diffTime = endDate - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return { status: 'active', days: diffDays };
+        }
+
+        const initialMockMeds = [
+            {
+                id: 101,
+                name: "Napa Extend (নাপা এক্সটেন্ড)",
+                icon: "💊",
+                start: "2026-05-01",
+                end: "2026-06-30",
+                times: ["morning", "night"],
+                stock: 45,
+                instruction: "খাবারের পরে পানি সহ খেতে হবে / Take with water after eating"
+            },
+            {
+                id: 102,
+                name: "Sergel 20 (সারজেল ২০)",
+                icon: "🔴",
+                start: "2026-05-01",
+                end: "2026-06-30",
+                times: ["morning", "noon"],
+                stock: 18,
+                instruction: "খাবারের ২০ মিনিট পূর্বে / 20 mins before meals"
+            }
+        ];
+
+        window.medications = JSON.parse(localStorage.getItem('sp_meds')) || initialMockMeds;
+        window.historyData = JSON.parse(localStorage.getItem('sp_history_v2')) || {};
+        window.diaryEntries = JSON.parse(localStorage.getItem('sp_diary')) || [];
+        window.profile = JSON.parse(localStorage.getItem('sp_profile')) || {
+            name: "ব্যবহারকারী / User", father: "", mother: "", address: "", sos: "01711000000"
+        };
+
+        let tempMedPhoto = null;
+        let mediaRecorder;
+        let audioChunks = [];
+        let isRecording = false;
+
+        // --- CORE STORAGE AND Cloud Syncer INTERACTION ---
+        function saveAll() {
+            localStorage.setItem('sp_meds', JSON.stringify(window.medications));
+            localStorage.setItem('sp_history_v2', JSON.stringify(window.historyData));
+            localStorage.setItem('sp_diary', JSON.stringify(window.diaryEntries));
+            localStorage.setItem('sp_profile', JSON.stringify(window.profile));
+            localStorage.setItem('sp_lang', window.lang);
+            
+            renderAll();
+            
+            // Sync up with Firebase RTD
+            if (window.syncToCloud) {
+                window.syncToCloud();
+            }
+        }
+
+        // --- TRANSLATION RENDERING ENGINE ---
+        function translatePage() {
+            // Apply language active indicator classes
+            const bnBtn = document.getElementById('lang-bn-btn');
+            const enBtn = document.getElementById('lang-en-btn');
+            if (window.lang === 'bn') {
+                bnBtn.className = "px-4 py-2 font-black text-xs rounded-xl bg-indigo-600 text-white shadow-md transition-all";
+                enBtn.className = "px-4 py-2 font-black text-xs rounded-xl text-indigo-700 hover:bg-indigo-50 transition-all";
+            } else {
+                enBtn.className = "px-4 py-2 font-black text-xs rounded-xl bg-indigo-600 text-white shadow-md transition-all";
+                bnBtn.className = "px-4 py-2 font-black text-xs rounded-xl text-indigo-700 hover:bg-indigo-50 transition-all";
+            }
+
+            // Translate general text nodes matching data-keys
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[window.lang][key]) {
+                    el.innerText = translations[window.lang][key];
+                }
+            });
+
+            // Translate placeholders
+            document.querySelectorAll('[data-placeholder-key]').forEach(el => {
+                const key = el.getAttribute('data-placeholder-key');
+                if (translations[window.lang][key]) {
+                    el.placeholder = translations[window.lang][key];
+                }
+            });
+
+            // Translate Cloud indicators
+            const syncStatus = document.getElementById('cloud-sync-status').dataset.status || 'synced';
+            updateCloudIndicator(syncStatus);
+        }
+
+        function setLanguage(langCode) {
+            window.lang = langCode;
+            translatePage();
+            saveAll();
+        }
+
+        function updateCloudIndicator(status) {
+            const el = document.getElementById('cloud-sync-status');
+            el.dataset.status = status;
+            
+            if (status === 'syncing') {
+                el.innerText = translations[window.lang].syncing;
+                el.className = "text-[9px] bg-indigo-500 text-white px-2 py-0.5 rounded-full font-bold animate-pulse";
+            } else if (status === 'synced') {
+                el.innerText = '☁️ ' + translations[window.lang].synced;
+                el.className = "text-[9px] bg-emerald-600 text-white px-2 py-0.5 rounded-full font-bold";
+            } else {
+                el.innerText = '⚠️ ' + translations[window.lang].offline;
+                el.className = "text-[9px] bg-rose-500 text-white px-2 py-0.5 rounded-full font-bold animate-bounce";
+            }
+        }
+
+        // --- NAVIGATION TABS CONTROL ---
+        function showTab(name) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active', 'text-white'));
+            document.getElementById('tab-' + name).classList.remove('hidden');
+            document.getElementById('btn-' + name).classList.add('active');
+            
+            if(name === 'home') { determineSlot(); }
+            if(name === 'pills') { renderInventory(); }
+            if(name === 'history') { renderHistory(); }
+            if(name === 'health') { renderDiary(); }
+            if(name === 'profile') { populateProfileForm(); }
+            window.scrollTo(0,0);
+        }
+
+        function determineSlot() {
+            const h = new Date().getHours();
+            let s = 'morning';
+            if(h >= 6 && h < 11) s = 'morning';
+            else if(h >= 11 && h < 16) s = 'noon';
+            else if(h >= 16 && h < 20) s = 'evening';
+            else s = 'night';
+            setFocus(s);
+        }
+
+        function setFocus(slot) {
+            document.querySelectorAll('.time-focus-btn').forEach(b => b.classList.remove('active'));
+            const btn = document.getElementById('focus-' + slot);
+            if(btn) btn.classList.add('active');
+            renderSchedule(slot);
+        }
+
+        // --- CUSTOM POPUPS & INTERACTIVE TOASTS ---
+        function showCustomAlert(message, type = "success") {
+            const container = document.getElementById('custom-toast-container');
+            const toast = document.createElement('div');
+            toast.className = `p-4 rounded-2xl shadow-xl text-white font-bold text-sm pointer-events-auto transition-all transform translate-y-2 opacity-0 flex items-center justify-between gap-3 ${
+                type === 'danger' ? 'bg-red-600' : type === 'warning' ? 'bg-amber-500' : 'bg-green-600'
+            }`;
+            
+            toast.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()" class="text-white hover:opacity-80 text-lg leading-none font-black">&times;</button>
+            `;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', '-translate-y-2');
+                setTimeout(() => toast.remove(), 400);
+            }, 4000);
+        }
+
+        let confirmPromiseResolver;
+        function showCustomConfirm(title, msg) {
+            document.getElementById('confirm-title').innerText = title;
+            document.getElementById('confirm-message').innerText = msg;
+            
+            const modal = document.getElementById('custom-confirm-modal');
+            modal.classList.remove('hidden');
+            
+            return new Promise((resolve) => {
+                confirmPromiseResolver = resolve;
+            });
+        }
+
+        document.getElementById('confirm-ok').addEventListener('click', () => {
+            document.getElementById('custom-confirm-modal').classList.add('hidden');
+            if (confirmPromiseResolver) confirmPromiseResolver(true);
+        });
+
+        document.getElementById('confirm-cancel').addEventListener('click', () => {
+            document.getElementById('custom-confirm-modal').classList.add('hidden');
+            if (confirmPromiseResolver) confirmPromiseResolver(false);
+        });
+
+        // --- MEDICINE LOGGING CORE ---
+        function takeMedicine(id, slot, status='taken') {
+            const today = new Date().toDateString();
+            if(!window.historyData[today]) window.historyData[today] = { meds: {}, logs: [], creation: [] };
+            
+            window.historyData[today].meds[`${id}_${slot}`] = {
+                status,
+                time: new Date().toLocaleTimeString(window.lang === 'bn' ? 'bn-BD' : 'en-US', {hour:'2-digit', minute:'2-digit'})
+            };
+
+            if(status === 'taken') {
+                const med = window.medications.find(m => m.id === id);
+                if(med) {
+                    med.stock = Math.max(0, med.stock - 1);
+                    if (med.stock <= 5) {
+                        const alertMsg = window.lang === 'bn' 
+                            ? `সাবধান: ${med.name} এর স্টক ফুরিয়ে যাচ্ছে (${med.stock}টি আছে)` 
+                            : `Warning: ${med.name} stock is low (${med.stock} remaining)`;
+                        showCustomAlert(alertMsg, 'warning');
+                    }
+                }
+            }
+            saveAll();
+            showCustomAlert(window.lang === 'bn' ? "ঔষধ খাওয়ার রেকর্ড সেভ করা হয়েছে" : "Medicine intake recorded successfully");
+        }
+
+        function checkAllMedsStatus() {
+            const today = new Date().toDateString();
+            const todayLogs = window.historyData[today]?.meds || {};
+            let totalNeeded = 0;
+            let totalTaken = 0;
+
+            window.medications.forEach(m => {
+                m.times.forEach(slot => {
+                    totalNeeded++;
+                    if(todayLogs[`${m.id}_${slot}`]?.status === 'taken') {
+                        totalTaken++;
+                    }
+                });
+            });
+
+            if(totalTaken >= totalNeeded && totalNeeded > 0) {
+                const spText = window.lang === 'bn' 
+                    ? `জি ${window.profile.name}, আপনার আজকের সব ঔষধ খাওয়া শেষ হয়েছে। আপনি সুস্থ থাকুন।`
+                    : `Yes ${window.profile.name}, you have successfully taken all of today's medicines. Stay healthy.`;
+                speakSystem(spText);
+                showCustomAlert(window.lang === 'bn' ? "আজকের সব ঔষধ খাওয়া শেষ!" : "All of today's medicines have been taken!", "success");
+            } else {
+                const remaining = totalNeeded - totalTaken;
+                const spText = window.lang === 'bn'
+                    ? `না ${window.profile.name}, আপনার আজকের সব ঔষধ খাওয়া হয়নি। আরও ${remaining} টি ঔষধ বাকি আছে।`
+                    : `No ${window.profile.name}, you have not taken all of today's medicines. ${remaining} medicines are remaining.`;
+                speakSystem(spText);
+                showCustomAlert(window.lang === 'bn' ? `${remaining}টি ঔষধ এখনো বাকি আছে!` : `${remaining} medicines are still remaining!`, "warning");
+            }
+        }
+
+        // --- VOICE ASSISTANT SPEECH GENERATOR ---
+        function smartVoiceAssistant(type) {
+            const today = new Date().toDateString();
+            const todayLogs = window.historyData[today]?.meds || {};
+            let speech = "";
+
+            if(type === 'daily') {
+                let slots = window.lang === 'bn' 
+                    ? { morning: 'সকাল', noon: 'দুপুর', evening: 'বিকেল', night: 'রাত' }
+                    : { morning: 'Morning', noon: 'Noon', evening: 'Evening', night: 'Night' };
+                let summary = [];
+                let totalPending = 0;
+
+                Object.keys(slots).forEach(slotKey => {
+                    const slotMeds = window.medications.filter(m => m.times.includes(slotKey));
+                    const pending = slotMeds.filter(m => !todayLogs[`${m.id}_${slotKey}`]);
+                    if(pending.length > 0) {
+                        summary.push(window.lang === 'bn' 
+                            ? `${slots[slotKey]} বেলার ${pending.length}টি ঔষধ বাকি আছে।`
+                            : `${slots[slotKey]} slot has ${pending.length} remaining medicines.`);
+                        totalPending += pending.length;
+                    }
+                });
+
+                if(totalPending === 0) {
+                    speech = window.lang === 'bn' 
+                        ? `শুভ দিন ${window.profile.name}। আপনার আজকের সব ঔষধ খাওয়া শেষ হয়েছে।`
+                        : `Good day ${window.profile.name}. All of today's medicines have been taken.`;
+                } else {
+                    speech = window.lang === 'bn'
+                        ? `আসসালামু আলাইকুম ${window.profile.name}। আজকের রুটিনে আপনার ${summary.join(' ')} দয়া করে খেয়ে নিন।`
+                        : `Hello ${window.profile.name}. In today's routine, ${summary.join(' ')} Please take them on time.`;
+                }
+            } else if(type === 'slot') {
+                const activeBtn = document.querySelector('.time-focus-btn.active');
+                if(!activeBtn) return;
+                const slotId = activeBtn.id.replace('focus-', '');
+                const slotName = window.lang === 'bn' 
+                    ? {morning:'সকাল', noon:'দুপুর', night:'রাত', evening: 'বিকেল'}[slotId]
+                    : {morning:'Morning', noon:'Noon', night:'Night', evening: 'Evening'}[slotId];
+                const medsInSlot = window.medications.filter(m => m.times.includes(slotId));
+                const pending = medsInSlot.filter(m => !todayLogs[`${m.id}_${slotId}`]);
+
+                if(pending.length === 0) {
+                    speech = window.lang === 'bn' 
+                        ? `${slotName} বেলার সব ঔষধ খাওয়া হয়ে গেছে।`
+                        : `All medicines for ${slotName} have been taken.`;
+                } else {
+                    const names = pending.map(p => p.name).join(', ');
+                    speech = window.lang === 'bn'
+                        ? `${slotName} বেলা আপনার ${pending.length}টি ঔষধ বাকি আছে। ঔষধগুলো হলো: ${names}। এখন এগুলো খেয়ে নিন।`
+                        : `You have ${pending.length} medicines remaining for ${slotName} slot. They are: ${names}. Please take them now.`;
+                }
+            }
+            speakSystem(speech);
+        }
+
+        function speakSystem(text) {
+            if(!('speechSynthesis' in window)) {
+                showCustomAlert("TTS service not supported", "danger");
+                return;
+            }
+            window.speechSynthesis.cancel();
+            const utt = new SpeechSynthesisUtterance(text);
+            utt.lang = window.lang === 'bn' ? 'bn-BD' : 'en-US';
+            utt.rate = 0.85;
+            window.speechSynthesis.speak(utt);
+        }
+
+        // --- AUDIO DIARY LOGGER ---
+        async function toggleAudioRecording() {
+            const recordIcon = document.getElementById('record-icon');
+            const recordStatus = document.getElementById('record-status');
+            if(!isRecording) {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+                    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                        const reader = new FileReader();
+                        reader.readAsDataURL(audioBlob);
+                        reader.onloadend = () => { window.currentRecordedAudio = reader.result; };
+                    };
+                    mediaRecorder.start();
+                    isRecording = true;
+                    recordIcon.innerHTML = `<div class="audio-wave"><div class="audio-bar"></div><div class="audio-bar" style="animation-delay:0.2s"></div><div class="audio-bar" style="animation-delay:0.4s"></div></div>`;
+                    recordStatus.innerText = window.lang === 'bn' ? "বলুন..." : "Listening...";
+                } catch (err) { 
+                    showCustomAlert(window.lang === 'bn' ? "মাইক্রোফোন ব্যবহারের অনুমতি দিন" : "Please grant access to microphone", "danger");
+                }
+            } else {
+                if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                    mediaRecorder.stop();
+                    mediaRecorder.stream.getTracks().forEach(t => t.stop());
+                }
+                isRecording = false;
+                recordIcon.innerText = "✅";
+                recordStatus.innerText = window.lang === 'bn' ? "রেকর্ড হয়েছে" : "Recorded";
+            }
+        }
+
+        function saveDiaryEntry() {
+            const text = document.getElementById('diary-note').value.trim();
+            const audio = window.currentRecordedAudio;
+            if(!text && !audio) {
+                showCustomAlert(window.lang === 'bn' ? "ডায়েরির জন্য কিছু লিখুন বা ভয়েস দিন" : "Please provide text or audio notes", "warning");
+                return;
+            }
+            window.diaryEntries.unshift({ id: Date.now(), text, audio, time: new Date().toLocaleString(window.lang === 'bn' ? 'bn-BD' : 'en-US') });
+            document.getElementById('diary-note').value = "";
+            window.currentRecordedAudio = null;
+            document.getElementById('record-icon').innerText = "🎤";
+            document.getElementById('record-status').innerText = window.lang === 'bn' ? "ভয়েস ডায়েরি" : "Voice Diary";
+            saveAll();
+            showCustomAlert(window.lang === 'bn' ? "ডায়েরি এন্ট্রি সফলভাবে সেভ করা হয়েছে" : "Diary entry saved successfully", "success");
+        }
+
+        function playSavedAudio(id) {
+            const entry = window.diaryEntries.find(e => e.id == id);
+            if(entry?.audio) {
+                const aud = new Audio(entry.audio);
+                aud.play().catch(e => {
+                    showCustomAlert("Playback failure", "danger");
+                });
+            }
+        }
+
+        // --- PROTO PHOTOGRAPH AND GRAPHICS PRESET LOADING ---
+        function handleMedPhoto(input) {
+            if (input.files?.[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    tempMedPhoto = e.target.result;
+                    document.getElementById('med-preview').innerHTML = `<img src="${tempMedPhoto}" class="w-full h-full object-cover">`;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function uploadProfilePhoto(input) {
+            if (input.files?.[0]) {
+                const reader = new FileReader();
+                reader.onload = e => { 
+                    window.profile.photo = e.target.result; 
+                    saveAll();
+                    showCustomAlert(window.lang === 'bn' ? "প্রোফাইল ছবি পরিবর্তন হয়েছে" : "Profile picture updated!");
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // --- PRESCRIPTION ---
+        function openPrescription() {
+            const container = document.getElementById('prescription-list');
+            container.innerHTML = "";
+            
+            if(window.medications.length === 0) {
+                container.innerHTML = `<div class="p-10 text-center font-bold text-gray-300" data-key="noDiaryYet">কোনো ঔষধ যোগ করা নেই</div>`;
+            } else {
+                window.medications.forEach((m, idx) => {
+                    const morning = m.times.includes('morning') ? '১' : '০';
+                    const noon = m.times.includes('noon') ? '১' : '০';
+                    const evening = m.times.includes('evening') ? '১' : '০';
+                    const night = m.times.includes('night') ? '১' : '০';
+                    const schedule = `${morning}-${noon}-${evening}-${night}`;
+
+                    // Date range formatting
+                    const startDateStr = m.start ? formatBilingualNumber(m.start) : '';
+                    const endDateStr = m.end ? formatBilingualNumber(m.end) : '';
+                    const dateRangeHTML = (m.start || m.end)
+                        ? `<p class="text-[11px] text-amber-600 font-bold mt-1">📅 ${translations[window.lang].courseDurationLabel}: ${startDateStr || '...'} ➔ ${endDateStr || '...'}</p>`
+                        : `<p class="text-[11px] text-slate-400 font-bold mt-1">♾️ ${translations[window.lang].noLimitLabel}</p>`;
+
+                    const item = document.createElement('div');
+                    item.className = "p-5 bg-blue-50 rounded-[25px] flex items-center gap-4 relative border border-blue-100 shadow-sm";
+                    item.innerHTML = `
+                        <div class="serial-num">${idx + 1}</div>
+                        <div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center text-2xl shadow-sm overflow-hidden">
+                            ${m.photo ? `<img src="${m.photo}" class="w-full h-full object-cover">` : m.icon}
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-black text-slate-800">${m.name}</h4>
+                            <p class="text-xs font-bold text-blue-600 mt-1">${window.lang === 'bn' ? 'খাওয়ার সময়' : 'Intake Slot'}: ${schedule}</p>
+                            ${dateRangeHTML}
+                            <p class="text-[10px] text-gray-400 mt-1">${m.instruction || ''}</p>
+                        </div>
+                    `;
+                    container.appendChild(item);
+                });
+            }
+            document.getElementById('prescription-modal').classList.remove('hidden');
+        }
+        function closePrescription() { document.getElementById('prescription-modal').classList.add('hidden'); }
+
+        // --- STREAMING_CHUNK: Rendering Schedule Slot Cards ---
+        function renderSchedule(slot) {
+            const container = document.getElementById('focused-schedule');
+            container.innerHTML = "";
+            const today = new Date().toDateString();
+            const meds = window.medications.filter(m => m.times.includes(slot));
+
+            if(meds.length === 0) {
+                container.innerHTML = `<div class="p-16 text-center bg-white rounded-[30px] border border-dashed border-gray-200 text-gray-300 font-bold text-sm uppercase" data-key="noMedThisSlot">এই বেলা কোনো ঔষধ নেই</div>`;
+                translatePage();
+                return;
+            }
+
+            meds.forEach((m, index) => {
+                const log = window.historyData[today]?.meds[`${m.id}_${slot}`];
+                const isTaken = log?.status === 'taken';
+
+                // New remaining days analysis and calculation
+                const rem = getRemainingDays(m.start, m.end);
+                let remainingHTML = "";
+                if (rem.status === 'active') {
+                    remainingHTML = `<span class="text-[10px] font-black text-amber-600 bg-amber-50 px-2.5 py-1 rounded-md inline-block mt-1">⏳ ${formatBilingualNumber(rem.days)} ${translations[window.lang].daysRemainingLabel}</span>`;
+                } else if (rem.status === 'notStarted') {
+                    remainingHTML = `<span class="text-[10px] font-black text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-md inline-block mt-1">⏳ ${formatBilingualNumber(rem.days)} ${translations[window.lang].notStartedYetLabel}</span>`;
+                } else if (rem.status === 'finished') {
+                    remainingHTML = `<span class="text-[10px] font-black text-rose-600 bg-rose-50 px-2.5 py-1 rounded-md inline-block mt-1">❌ ${translations[window.lang].courseFinishedLabel}</span>`;
+                } else {
+                    remainingHTML = `<span class="text-[10px] font-black text-slate-500 bg-slate-50 px-2.5 py-1 rounded-md inline-block mt-1">♾️ ${translations[window.lang].noLimitLabel}</span>`;
+                }
+
+                const card = document.createElement('div');
+                card.className = `p-5 bg-white rounded-[30px] shadow-sm border-2 relative transition-all ${isTaken ? 'border-green-200 opacity-70 bg-green-50/10' : 'border-slate-50'}`;
+                card.innerHTML = `
+                    <div class="serial-num">${index + 1}</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-[22px] bg-slate-50 flex items-center justify-center text-3xl overflow-hidden border border-slate-100">
+                            ${m.photo ? `<img src="${m.photo}" class="w-full h-full object-cover">` : m.icon}
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold ${isTaken ? 'line-through text-green-700' : 'text-slate-800'}">${m.name}</h3>
+                            <div class="flex flex-wrap gap-1.5 items-center">
+                                <p class="text-[10px] font-bold text-blue-500 uppercase bg-blue-50/70 inline-block px-2.5 py-1 rounded-lg mt-1">${m.instruction || (window.lang === 'bn' ? 'কোনো নিয়ম উল্লেখ নেই' : 'No instruction available')}</p>
+                                ${remainingHTML}
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="takeMedicine(${m.id}, '${slot}', 'taken')" ${isTaken ? 'disabled' : ''} class="w-full py-4 rounded-[20px] font-black text-sm shadow-sm transition-all ${isTaken ? 'bg-green-600 text-white cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 text-white active:scale-95'}">
+                        ${isTaken ? translations[window.lang].takenLabel : translations[window.lang].takeLabel}
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+            translatePage();
+        }
+
+        function renderInventory() {
+            const container = document.getElementById('inventory-list');
+            container.innerHTML = "";
+            window.medications.forEach((m, index) => {
+                const div = document.createElement('div');
+                div.className = "bg-white p-5 rounded-[30px] shadow-sm border border-slate-100 flex items-center gap-4 relative transition-all hover:shadow-md";
+                div.innerHTML = `
+                    <div class="serial-num">${index + 1}</div>
+                    <div class="w-16 h-16 rounded-[22px] bg-slate-50 overflow-hidden flex items-center justify-center text-3xl border border-slate-100">
+                        ${m.photo ? `<img src="${m.photo}" class="w-full h-full object-cover">` : m.icon}
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-black text-slate-800 text-lg leading-snug">${m.name}</h4>
+                        <span class="text-[10px] font-black bg-blue-50 text-blue-500 px-2.5 py-0.5 rounded-md">${window.lang === 'bn' ? 'স্টক' : 'Stock'}: ${m.stock} ${window.lang === 'bn' ? 'টি' : 'units'}</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="editMed(${m.id})" class="text-blue-500 p-2 hover:bg-slate-50 rounded-xl transition-all">⚙️</button>
+                        <button onclick="deleteMed(${m.id})" class="text-red-500 p-2 hover:bg-red-50 rounded-xl transition-all">🗑️</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            translatePage();
+        }
+
+        // --- STREAMING_CHUNK: Compiling Structured History Matrix Checklist ---
+        function renderHistory() {
+            const container = document.getElementById('history-accordion');
+            container.innerHTML = "";
+            const dates = Object.keys(window.historyData).sort((a,b) => new Date(b) - new Date(a));
+            
+            if (dates.length === 0) {
+                container.innerHTML = `<div class="p-16 text-center bg-white rounded-[30px] text-gray-300 font-bold" data-key="noHistoryYet">এখনো কোনো ইতিহাস নেই</div>`;
+                translatePage();
+                return;
+            }
+
+            dates.forEach(date => {
+                const dayData = window.historyData[date];
+                let takenCount = 0;
+                Object.values(dayData.meds).forEach(m => { if(m.status === 'taken') takenCount++; });
+                
+                const div = document.createElement('div');
+                div.className = "bg-white rounded-[30px] shadow-sm border border-slate-100 overflow-hidden";
+                
+                // Redesigned structured matrix layout
+                let matrixHTML = `
+                    <div class="mt-4 overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-wider">
+                                    <th class="py-3 px-4">${window.lang === 'bn' ? 'ঔষধের নাম' : 'Medicine Name'}</th>
+                                    <th class="py-3 px-2 text-center">${window.lang === 'bn' ? 'সকাল' : 'Morning'}</th>
+                                    <th class="py-3 px-2 text-center">${window.lang === 'bn' ? 'দুপুর' : 'Noon'}</th>
+                                    <th class="py-3 px-2 text-center">${window.lang === 'bn' ? 'বিকেল' : 'Evening'}</th>
+                                    <th class="py-3 px-2 text-center">${window.lang === 'bn' ? 'রাত' : 'Night'}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+
+                window.medications.forEach(med => {
+                    matrixHTML += `
+                        <tr class="border-b border-slate-50 last:border-0 hover:bg-slate-50/50">
+                            <td class="py-3.5 px-4 font-bold text-sm text-slate-700 flex items-center gap-2">
+                                <span class="text-lg">${med.icon}</span>
+                                <span>${med.name}</span>
+                            </td>
+                    `;
+
+                    const slots = ['morning', 'noon', 'evening', 'night'];
+                    slots.forEach(slot => {
+                        const isScheduled = med.times.includes(slot);
+                        if (!isScheduled) {
+                            // Non scheduled slot (Gray box)
+                            matrixHTML += `
+                                <td class="py-3 px-2 text-center">
+                                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-slate-100 text-slate-300 font-bold text-xs" title="${translations[window.lang].notScheduled}">
+                                        ➖
+                                    </span>
+                                </td>
+                            `;
+                        } else {
+                            const takenLog = dayData.meds[`${med.id}_${slot}`];
+                            if (takenLog && takenLog.status === 'taken') {
+                                // Scheduled & Taken (Green Tick mark with time)
+                                matrixHTML += `
+                                    <td class="py-3 px-2 text-center">
+                                        <div class="inline-flex flex-col items-center">
+                                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-green-100 text-green-700 font-bold text-sm" title="${translations[window.lang].takenLabel}">
+                                                ✓
+                                            </span>
+                                            <span class="text-[8px] font-bold text-green-500 mt-0.5">${takenLog.time}</span>
+                                        </div>
+                                    </td>
+                                `;
+                            } else {
+                                // Scheduled but Pending (Red Cross mark)
+                                matrixHTML += `
+                                    <td class="py-3 px-2 text-center">
+                                        <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-red-100 text-red-600 font-bold text-xs" title="${translations[window.lang].pending}">
+                                            ❌
+                                        </span>
+                                    </td>
+                                `;
+                            }
+                        }
+                    });
+
+                    matrixHTML += `</tr>`;
+                });
+
+                matrixHTML += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+
+                div.innerHTML = `
+                    <button onclick="this.nextElementSibling.classList.toggle('hidden')" class="w-full p-6 flex justify-between items-center text-left">
+                        <div>
+                            <span class="block font-black text-slate-800 text-lg">${date}</span>
+                            <span class="text-[11px] font-bold text-green-500 bg-green-50 px-2.5 py-1 rounded-full mt-1 inline-block">
+                                ${takenCount} ${window.lang === 'bn' ? 'টি ঔষধ খাওয়া সম্পন্ন হয়েছে' : 'medicines taken successfully'}
+                            </span>
+                        </div>
+                        <span class="text-slate-300 text-lg transition-transform duration-200">▼</span>
+                    </button>
+                    <div class="hidden p-4 border-t border-slate-50 bg-slate-50/30">
+                        ${matrixHTML}
+                    </div>`;
+                container.appendChild(div);
+            });
+            translatePage();
+        }
+
+        function renderDiary() {
+            const container = document.getElementById('diary-list');
+            if (window.diaryEntries.length === 0) {
+                container.innerHTML = `<div class="p-16 text-center bg-white rounded-[30px] text-gray-300 font-bold" data-key="noDiaryYet">ডায়েরি খালি আছে</div>`;
+                translatePage();
+                return;
+            }
+
+            container.innerHTML = window.diaryEntries.map((e, i) => `
+                <div class="bg-white p-6 rounded-[30px] shadow-sm border-l-8 border-l-rose-500 relative transition-all hover:shadow-md border border-slate-100">
+                    <div class="serial-num">${i + 1}</div>
+                    <p class="font-semibold text-slate-700 leading-relaxed">${e.text || (window.lang === 'bn' ? 'কোনো লিখিত নোট নেই (ভয়েস ডায়েরি)' : 'No written notes (Voice Diary Only)')}</p>
+                    <div class="flex justify-between items-center mt-5">
+                        <span class="text-[10px] font-black text-gray-300">${e.time}</span>
+                        <div class="flex gap-4 items-center">
+                           ${e.audio ? `<button onclick="playSavedAudio('${e.id}')" class="text-rose-600 hover:text-rose-700 font-black text-xs bg-rose-50 px-3 py-1.5 rounded-full transition-all">🔊 ${window.lang === 'bn' ? 'শুনুন' : 'Listen'}</button>` : ''}
+                           <button onclick="deleteDiary(${e.id})" class="text-gray-300 hover:text-red-500 transition-colors">🗑️</button>
+                        </div>
+                    </div>
+                </div>`).join('');
+            translatePage();
+        }
+
+        // --- FORM AND MODAL CONTROL ENGINE ---
+        function openMedModal() { 
+            document.getElementById('med-form').reset(); 
+            document.getElementById('m-id').value = ""; 
+            tempMedPhoto = null;
+            document.getElementById('med-preview').innerHTML = `<span class="text-3xl">📷</span><span class="text-[8px] font-black text-blue-400 mt-1">ছবি দিন</span>`;
+            document.getElementById('med-modal').classList.remove('hidden'); 
+        }
+        function closeMedModal() { document.getElementById('med-modal').classList.add('hidden'); }
+
+        document.getElementById('med-form').onsubmit = e => {
+            e.preventDefault();
+            const id = document.getElementById('m-id').value;
+            const times = Array.from(document.querySelectorAll('input[name="m-time"]:checked')).map(c => c.value);
+            
+            if (times.length === 0) {
+                showCustomAlert(window.lang === 'bn' ? "দয়া করে অন্তত একটি খাওয়ার সময় নির্বাচন করুন" : "Please select at least one timeslot", "warning");
+                return;
+            }
+
+            const medData = {
+                id: id ? parseInt(id) : Date.now(),
+                name: document.getElementById('m-name').value,
+                icon: document.getElementById('m-icon').value,
+                start: document.getElementById('m-start').value,
+                end: document.getElementById('m-end').value,
+                times: times,
+                stock: parseInt(document.getElementById('m-stock').value) || 0,
+                instruction: document.getElementById('m-inst').value,
+                photo: tempMedPhoto
+            };
+
+            if(!id) {
+                window.medications.push(medData);
+                showCustomAlert(window.lang === 'bn' ? "নতুন ঔষধ সফলভাবে যোগ করা হয়েছে" : "New medicine added successfully!");
+            } else {
+                const idx = window.medications.findIndex(m => m.id === parseInt(id));
+                window.medications[idx] = medData;
+                showCustomAlert(window.lang === 'bn' ? "ঔষধের তথ্য আপডেট করা হয়েছে" : "Medicine schedule updated!");
+            }
+            saveAll();
+            closeMedModal();
+        };
+
+        function editMed(id) {
+            const m = window.medications.find(x => x.id === id);
+            openMedModal();
+            document.getElementById('m-id').value = m.id;
+            document.getElementById('m-name').value = m.name;
+            document.getElementById('m-icon').value = m.icon;
+            document.getElementById('m-stock').value = m.stock;
+            document.getElementById('m-inst').value = m.instruction;
+            document.getElementById('m-start').value = m.start || "";
+            document.getElementById('m-end').value = m.end || "";
+            tempMedPhoto = m.photo;
+            if(m.photo) document.getElementById('med-preview').innerHTML = `<img src="${m.photo}" class="w-full h-full object-cover">`;
+            document.querySelectorAll('input[name="m-time"]').forEach(cb => {
+                cb.checked = m.times.includes(cb.value);
+            });
+        }
+
+        async function deleteMed(id) {
+            const confirmTitle = window.lang === 'bn' ? "মুছে ফেলার অনুমতি দিন" : "Confirm Deletion";
+            const confirmMsg = window.lang === 'bn' ? "আপনি কি এই ঔষধটি তালিকা থেকে বাদ দিতে চান?" : "Are you sure you want to remove this medicine?";
+            const confirmDelete = await showCustomConfirm(confirmTitle, confirmMsg);
+            if (confirmDelete) {
+                window.medications = window.medications.filter(m => m.id !== id);
+                saveAll();
+                showCustomAlert(window.lang === 'bn' ? "ঔষধটি মুছে ফেলা হয়েছে" : "Medicine removed", "danger");
+            }
+        }
+
+        async function deleteDiary(id) {
+            const confirmTitle = window.lang === 'bn' ? "মুছে ফেলুন" : "Confirm Delete";
+            const confirmMsg = window.lang === 'bn' ? "আপনি কি এই ডায়েরি এন্ট্রিটি চিরতরে মুছে ফেলতে চান?" : "Are you sure you want to delete this diary entry?";
+            const confirmDelete = await showCustomConfirm(confirmTitle, confirmMsg);
+            if (confirmDelete) {
+                window.diaryEntries = window.diaryEntries.filter(e => e.id !== id);
+                saveAll();
+                showCustomAlert(window.lang === 'bn' ? "ডায়েরি এন্ট্রি মুছে ফেলা হয়েছে" : "Diary note deleted", "danger");
+            }
+        }
+
+        // --- PROFILE LOGIC ---
+        function populateProfileForm() {
+            document.getElementById('p-name').value = window.profile.name || "";
+            document.getElementById('p-sos').value = window.profile.sos || "";
+            document.getElementById('p-father').value = window.profile.father || "";
+            document.getElementById('p-mother').value = window.profile.mother || "";
+            document.getElementById('p-address').value = window.profile.address || "";
+        }
+
+        function saveFullProfile() {
+            window.profile = { ...window.profile, 
+                name: document.getElementById('p-name').value.trim() || (window.lang === 'bn' ? "ব্যবহারকারী" : "User"), 
+                sos: document.getElementById('p-sos').value.trim() || "01711000000",
+                father: document.getElementById('p-father').value.trim() || "",
+                mother: document.getElementById('p-mother').value.trim() || "",
+                address: document.getElementById('p-address').value.trim() || ""
+            };
+            saveAll();
+            showCustomAlert(window.lang === 'bn' ? "আপনার প্রোফাইল তথ্য সফলভাবে সেভ করা হয়েছে" : "Profile parameters saved successfully!", "success");
+        }
+
+        function toggleSOS() { document.getElementById('sos-modal').classList.toggle('hidden'); }
+
+        function renderAll() {
+            const activeBtn = document.querySelector('.time-focus-btn.active');
+            const currentSlot = activeBtn ? activeBtn.id.replace('focus-', '') : 'morning';
+            renderSchedule(currentSlot);
+            renderInventory();
+            renderDiary();
+            document.getElementById('display-user-name').innerText = window.profile.name;
+            document.getElementById('profile-name-display').innerText = window.profile.name;
+            document.getElementById('sos-call-btn').href = `tel:${window.profile.sos}`;
+            if(window.profile.photo) {
+                const imgTag = `<img src="${window.profile.photo}" class="w-full h-full object-cover">`;
+                document.getElementById('profile-img-container').innerHTML = imgTag;
+                document.getElementById('header-profile-img').innerHTML = imgTag;
+            }
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString(window.lang === 'bn' ? 'bn-BD' : 'en-US', {hour:'2-digit', minute:'2-digit'});
+            const dateStr = now.toLocaleDateString(window.lang === 'bn' ? 'bn-BD' : 'en-US', {weekday:'long', day:'numeric', month:'long'});
+            document.getElementById('clock').innerText = timeStr;
+            document.getElementById('date').innerText = dateStr;
+            document.getElementById('home-clock').innerText = timeStr;
+            document.getElementById('home-date').innerText = dateStr;
+        }
+
+        // --- LIFE-CYCLE BOOTSTRAP ---
+        window.onload = function() {
+            setInterval(updateClock, 1000);
+            updateClock();
+            determineSlot();
+            renderAll();
+        };
+      // Register Service Worker for Offline Capabilities
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('Sushastho Pro Service Worker Registered Successfully!', reg.scope))
+            .catch(err => console.error('Service Worker Registration Failed:', err));
+    });
+}
+    </script>
+</body>
+</html>
